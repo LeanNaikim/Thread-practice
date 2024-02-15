@@ -1,17 +1,39 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
-public class Main {
-    public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
-
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
+class SynchronizedDemo {
+    public synchronized void printWithDelay(String text, long delayMillis) {
+        for (int i =  0; i < text.length(); i++) {
+            System.out.print(text.charAt(i));
+            try {
+                Thread.sleep(delayMillis);
+            } catch (InterruptedException exception) {
+                System.out.println(exception.getMessage());
+            }
         }
+    }
+    public void printWithoutDelay(String string) {
+        System.out.print(string);
+    }
+}
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        SynchronizedDemo synchronizedDemo = new SynchronizedDemo();
+        Thread thread1 = new Thread(() -> synchronizedDemo.printWithDelay("WELCOME TO CSTAD!\n",  500));
+        Thread thread2 = new Thread(() -> synchronizedDemo.printWithDelay("******************************************************\n",  500));
+        Thread thread3 = new Thread(() -> synchronizedDemo.printWithDelay("Don't give up on this opportunity, do your best first. \n",  500));
+        Thread thread4 = new Thread(() -> synchronizedDemo.printWithDelay("-----------------------------------------------------\n",  500));
+        Thread thread5 = new Thread(() -> {
+            synchronizedDemo.printWithoutDelay("Downloading............");
+            synchronizedDemo.printWithoutDelay("completed  100%. \n");
+        });
+        thread1.start();
+        thread1.join();
+        thread2.start();
+        thread2.join();
+        thread3.start();
+        thread3.join();
+        thread4.start();
+        thread4.join();
+        thread5.start();
+        thread5.join();
     }
 }
