@@ -22,7 +22,8 @@ public class Main {
         Thread thread3 = new Thread(() -> synchronizedDemo.printWithDelay("Don't give up on this opportunity, do your best first. \n",  500));
         Thread thread4 = new Thread(() -> synchronizedDemo.printWithDelay("-----------------------------------------------------\n",  500));
         Thread thread5 = new Thread(() -> {
-            synchronizedDemo.printWithoutDelay("Downloading............");
+            synchronizedDemo.printWithoutDelay("Downloading");
+            synchronizedDemo.printWithDelay("............",500);
             synchronizedDemo.printWithoutDelay("completed  100%. \n");
         });
         thread1.start();
